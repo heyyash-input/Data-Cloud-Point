@@ -104,31 +104,46 @@ pip install numpy torch plyfile scikit-learn open3d
 
 ## 6. Run Commands
 
-Default run (training + evaluation + visualization + optimization summary):
+From the project root, after activating the virtual environment:
 
 ```powershell
-& "c:/Coding/Data Point Cloud Optimization/.venv/Scripts/python.exe" "c:/Coding/Data Point Cloud Optimization/main.py" --epochs 35 --patience 8
+python main.py --epochs 35 --patience 8
 ```
 
-Run without visualization window:
+Train and evaluate without the visualization window:
 
 ```powershell
-& "c:/Coding/Data Point Cloud Optimization/.venv/Scripts/python.exe" "c:/Coding/Data Point Cloud Optimization/main.py" --epochs 35 --patience 8 --no-visualize
+python main.py --epochs 35 --patience 8 --no-visualize
 ```
 
-Use class-weighted loss (can help minority recall, may reduce overall accuracy):
+Use class-weighted loss when you want to compare balanced vs unbalanced training:
 
 ```powershell
-& "c:/Coding/Data Point Cloud Optimization/.venv/Scripts/python.exe" "c:/Coding/Data Point Cloud Optimization/main.py" --epochs 35 --patience 8 --balanced-loss
+python main.py --epochs 35 --patience 8 --balanced-loss
 ```
 
 Set custom baseline for optimization summary:
 
 ```powershell
-& "c:/Coding/Data Point Cloud Optimization/.venv/Scripts/python.exe" "c:/Coding/Data Point Cloud Optimization/main.py" --baseline-accuracy 0.2989
+python main.py --baseline-accuracy 0.2989
 ```
 
-## 7. Optimization Summary Output
+If you are running on a remote or headless machine, keep `--no-visualize` enabled so the script stays practical without an Open3D window.
+
+## 7. Local vs HPC Comparison
+
+To show the difference between the 8-core local run and the 48-core HPC run in git, keep the comparison in this README or in a separate results markdown file and commit it alongside the code change.
+
+Suggested comparison fields:
+
+| Environment | CPU cores | Training data | Epochs | Test accuracy | Test loss | Notes |
+| --- | ---: | --- | ---: | ---: | ---: | --- |
+| Local machine | 8 | same split / subset |  |  |  | current implementation |
+| HPC server | 48 | full training set |  |  |  | reference run |
+
+If you want the difference to be visible in git history, the cleanest approach is to add the measured values here and then commit the README update. That way `git diff` shows the exact metric changes, and future readers can compare the environments directly.
+
+## 8. Optimization Summary Output
 
 At the end of each run, the script prints:
 
@@ -144,7 +159,7 @@ Example interpretation:
 - Absolute gain: +0.5546 (55.46 percentage points)
 - Relative gain: +185.54%
 
-## 8. Suggested Git Workflow
+## 9. Suggested Git Workflow
 
 ```powershell
 git add main.py README.md
@@ -152,7 +167,7 @@ git commit -m "Add optimization summary and complete project README"
 git push origin <your-branch>
 ```
 
-## 9. Troubleshooting
+## 10. Troubleshooting
 
 - If Open3D import warning appears in editor but runtime works, reload VS Code/Python interpreter.
 - If stratified split errors appear, increase `--max-points` or keep rare-class filtering enabled.
