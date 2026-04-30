@@ -316,6 +316,36 @@ Relative Gain:      +184.3% improvement over baseline
 
 ---
 
+### 6.3 Local vs HPC Results
+
+We ran the same model/training recipe on two environments: a local development machine (8 CPU cores) and an HPC server (48 CPU cores). The HPC metrics below are taken from the provided HPC run screenshot supplied by the user; the local metrics come from the documented local evaluation.
+
+| Environment | CPU cores | Training data | Epochs | Test accuracy | Absolute gain | Relative gain |
+| --- | ---: | --- | ---: | ---: | ---: | --- |
+| Local machine | 8 | same split / subset | 35 | ~0.85 | +0.5511 | +184.36% |
+| HPC server (screenshot) | 48 | full training set | 35 | 0.8889 | +0.5899 | +197.37% |
+
+Optimization summary outputs (text):
+
+```text
+Local machine (8 cores)
+Baseline Accuracy : 0.2989
+Current Accuracy  : ~0.85
+Absolute Gain     : +0.5511 (+55.11 percentage points)
+Relative Gain     : +184.36%
+
+HPC server (48 cores)
+Baseline Accuracy : 0.2989
+Current Accuracy  : 0.8889
+Absolute Gain     : +0.5899 (+58.99 percentage points)
+Relative Gain     : +197.37%
+```
+
+Notes:
+- The HPC `Current Accuracy` value (0.8889) is taken from the screenshot provided by the user and is included here for reproducibility and git history tracking.
+- For strict reproducibility, commit the full training logs/metrics file from each run (recommended: `results/local_run.md`, `results/hpc_run.md`) so diffs show exact numeric changes across environments.
+
+
 ## 7. Hyperparameter Configuration
 
 | Parameter | Default | Purpose |
